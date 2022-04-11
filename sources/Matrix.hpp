@@ -5,8 +5,11 @@
  */
 
 #include <iostream>
-#include <cstdlib>
+#include <stdexcept>
+#include <string>
 #include <vector>
+#include <sstream>
+#include <cstdlib>
 
 using namespace std;
 
@@ -19,34 +22,36 @@ namespace zich {
         vector<double> data;
 
         // Constructor
-        Matrix(vector<double> &vec, int row, int col){
-            if (row > 0){
+        Matrix(vector<double> vec, int row, int col){
+            if (row <= 0){
+                throw invalid_argument("Invalid Row");
+            } else {
                 mat_row = row;
             }
-            if (col > 0){
+
+            if (col <= 0){
+                throw invalid_argument("Invalid Column");
+            } else {
                 mat_col = col;
             }
+
             if(mat_col * mat_row != vec.size()){
-                throw invalid_argument("invalid data");
+                throw invalid_argument("invalid Data");
             } else {
-                data = vec;
+                data = move(vec);
             }
         }
 
         Matrix(Matrix& other){
-            if (other.mat_row > 0){
-                mat_row = other.mat_row;
-            }
-            if (other.mat_col > 0){
-                mat_col = other.mat_col;
-            }
+            mat_row = other.mat_row;
+            mat_col = other.mat_col;
             data = other.data;
         }
 
         // Destructor
         ~Matrix(){};
 
-        double get_size_of_mat();
+        double get_size() const;
 
         // Operators
 
@@ -57,14 +62,14 @@ namespace zich {
          */
 
         // Plus
-        Matrix operator+(Matrix const&);
+        Matrix operator+(const Matrix&);
 
-        Matrix operator+();
+        Matrix operator+() const;
 
         // Minus
         Matrix operator-(const Matrix&);
 
-        Matrix operator-();
+        Matrix operator-() const;
 
         // Add
         Matrix operator+=(const Matrix&);
@@ -80,8 +85,12 @@ namespace zich {
         // Increase by 1
         Matrix operator++();
 
+        Matrix operator++(const int);
+
         // Reduce by 1
         Matrix operator--();
+
+        Matrix operator--(const int);
 
         // Multiply
         Matrix operator*(const Matrix&);
@@ -97,25 +106,28 @@ namespace zich {
          */
 
         // Greater
-        bool operator>(Matrix&);
+        bool operator>(const Matrix&) const;
 
         // Greater Equal
-        bool operator>=(Matrix&);
+        bool operator>=(const Matrix&) const;
 
         // Lower
-        bool operator<(Matrix&);
+        bool operator<(const Matrix&) const;
 
         // Lower Equal
-        bool operator<=(Matrix&);
+        bool operator<=(const Matrix&) const;
 
         // Equal
-        bool operator==(Matrix&);
+        bool operator==(const Matrix&) const;
 
         // Not Equal
-        bool operator!=(Matrix&);
+        bool operator!=(const Matrix&) const;
+
+        // input
+        friend ostream& operator<<(ostream&, const Matrix&);
 
         // Output
-        friend ostream& operator<<(ostream&, const Matrix&);
+        friend istream& operator>>(istream&, const Matrix&);
 
     };
 }
