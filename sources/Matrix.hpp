@@ -127,7 +127,7 @@ namespace zich {
         friend ostream& operator<<(ostream&, const Matrix&);
 
         // Output
-        friend istream& operator>>(istream&, const Matrix&);
+        friend istream& operator>>(istream&, Matrix&);
 
     };
 }
