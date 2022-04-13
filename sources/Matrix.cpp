@@ -287,8 +287,8 @@ istream& zich::operator>>(istream& in, Matrix& M){
 
     vector<string> elements_list;
     stringstream stream1(input);
-
     string element;
+
     while(getline(stream1, element, ',')) {
         elements_list.push_back(element);
     }
@@ -323,20 +323,17 @@ istream& zich::operator>>(istream& in, Matrix& M){
 
     int row = elements_list.size();
     vector<string> numbers_list;
-
-    stringstream stream2(elements_list[0]);
-
+    stringstream first_elem(elements_list[0]);
     string number;
-    while(getline(stream2, number, ' ')) {
+    while(getline(first_elem, number, ' ')) {
         numbers_list.push_back(number);
     }
 
     int col = numbers_list.size();
-
     for(unsigned long i = 1; i < elements_list.size(); i++){
-        stringstream stream3(elements_list[i]);
+        stringstream curr_elem(elements_list[i]);
         string number;
-        while(getline(stream3, number, ' ')) {
+        while(getline(curr_elem, number, ' ')) {
             numbers_list.push_back(number);
         }
     }
@@ -348,7 +345,6 @@ istream& zich::operator>>(istream& in, Matrix& M){
 
     vector<double> new_data;
     new_data.resize((unsigned long)size);
-
     for (unsigned long i = 0; i < size; i++){
         double data = stod(numbers_list[i]);
         new_data[i] = data;
