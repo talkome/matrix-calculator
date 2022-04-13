@@ -288,9 +288,8 @@ istream& zich::operator>>(istream& in, Matrix& M){
     vector<string> elements_list;
     stringstream stream1(input);
 
-    while(stream1.good()) {
-        string element;
-        getline(stream1, element, ',');
+    string element;
+    while(getline(stream1, element, ',')) {
         elements_list.push_back(element);
     }
 
@@ -309,6 +308,7 @@ istream& zich::operator>>(istream& in, Matrix& M){
             }
 
         } else {
+
             if (curr_elem[0] != '[' || curr_elem[curr_elem_size-1] != ']'){
                 throw invalid_argument("Invalid Input");
             }
@@ -325,9 +325,9 @@ istream& zich::operator>>(istream& in, Matrix& M){
     vector<string> numbers_list;
 
     stringstream stream2(elements_list[0]);
-    while(stream2.good()) {
-        string number;
-        getline(stream2, number, ' ');
+
+    string number;
+    while(getline(stream2, number, ' ')) {
         numbers_list.push_back(number);
     }
 
@@ -335,9 +335,8 @@ istream& zich::operator>>(istream& in, Matrix& M){
 
     for(unsigned long i = 1; i < elements_list.size(); i++){
         stringstream stream3(elements_list[i]);
-        while(stream3.good()) {
-            string number;
-            getline(stream3, number, ' ');
+        string number;
+        while(getline(stream3, number, ' ')) {
             numbers_list.push_back(number);
         }
     }
