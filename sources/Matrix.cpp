@@ -286,10 +286,10 @@ istream& zich::operator>>(istream& in, Matrix& M){
     }
 
     vector<string> elements_list;
-    stringstream stream1(input);
+    stringstream stream(input);
     string element;
 
-    while(getline(stream1, element, ',')) {
+    while(getline(stream, element, ',')) {
         elements_list.push_back(element);
     }
 
