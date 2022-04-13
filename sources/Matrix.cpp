@@ -279,7 +279,6 @@ ostream& zich::operator<<(ostream &out, const Matrix& M){
 
 istream& zich::operator>>(istream& in, Matrix& M){
     string input;
-
     getline(in,input);
 
     if (input[0] != '[' || input[input.length()-1] != ']' ){
@@ -296,36 +295,34 @@ istream& zich::operator>>(istream& in, Matrix& M){
     }
 
     for(unsigned long i = 0; i < elements_list.size(); i++){
-        string curr_elem = elements_list[i];
         string full_elem;
+        string curr_elem = elements_list[i];
+        unsigned long curr_elem_size = curr_elem.length();
 
         if(i > 0){
             if (curr_elem[0] != ' ' || curr_elem[1] != '[' || curr_elem[curr_elem.length()-1] != ']'){
                 throw invalid_argument("Invalid Input");
             }
 
-            for (unsigned long j = 2; j < curr_elem.length()-1; j++){
+            for (unsigned long j = 2; j < curr_elem_size-1; j++){
                 full_elem.push_back(curr_elem[j]);
             }
 
-            elements_list[i] = full_elem;
-
         } else {
-            if (curr_elem[0] != '[' || curr_elem[curr_elem.length()-1] != ']'){
+            if (curr_elem[0] != '[' || curr_elem[curr_elem_size-1] != ']'){
                 throw invalid_argument("Invalid Input");
             }
 
-            for (unsigned long j = 1; j < curr_elem.length()-1; j++){
+            for (unsigned long j = 1; j < curr_elem_size-1; j++){
                 full_elem.push_back(curr_elem[j]);
             }
-
-            elements_list[i] = full_elem;
         }
+
+        elements_list[i] = full_elem;
     }
 
     int row = elements_list.size();
     vector<string> numbers_list;
-
 
     stringstream stream2(elements_list[0]);
     while(stream2.good()) {
@@ -347,20 +344,15 @@ istream& zich::operator>>(istream& in, Matrix& M){
 
     int size = numbers_list.size();
     if(size != col * row){
-        throw invalid_argument("Invalid InputA");
+        throw invalid_argument("Invalid Input");
     }
 
     vector<double> new_data;
     new_data.resize((unsigned long)size);
 
-    try {
-        for (unsigned long i = 0; i < size; i++){
-            double data = stod(numbers_list[i]);
-            new_data[i] = data;
-        }
-
-    } catch(exception e){
-        throw invalid_argument("Invalid Input");
+    for (unsigned long i = 0; i < size; i++){
+        double data = stod(numbers_list[i]);
+        new_data[i] = data;
     }
 
     Matrix new_matrix(new_data, row, col);
